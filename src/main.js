@@ -26,6 +26,14 @@ const searchParams = new URLSearchParams({
     per_page: perPage,
 });
 
+function showLoader() {
+    loader.style.display = "block";
+}
+
+function hideLoader() {
+    loader.style.display = "none";
+}
+
 async function searchImages() {
     const query = form.querySelector("input[name='query']").value.trim();
     
@@ -51,7 +59,7 @@ async function searchImages() {
     const url = `${BASE_URL}${searchParams.toString()}`;
 
     try {
-    loader.classList.remove("hidden");
+    showLoader();
 
     const response = await axios.get(url);
     const data = response.data;
@@ -87,7 +95,7 @@ async function searchImages() {
     });
     console.error(error);
   } finally {
-    loader.classList.add('hidden');
+    hideLoader();
   }
 }
   
