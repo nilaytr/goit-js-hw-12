@@ -46,7 +46,7 @@ async function searchImages() {
     return;
     }
     
-    if (query !== currentQuery) {
+    if (query !== currentQuery || page === 1) {
     page = 1;
     currentQuery = query;
     gallery.innerHTML = "";
@@ -95,7 +95,8 @@ async function searchImages() {
     });
     console.error(error);
   } finally {
-    hideLoader();
+        hideLoader();
+        form.reset();
   }
 }
   
