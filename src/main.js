@@ -15,7 +15,7 @@ const loader = document.querySelector('.loader');
 
 let page = 1;
 let currentQuery = "";
-const perPage = 20;
+const perPage = 40;
 
 const searchParams = new URLSearchParams({
     key: API_KEY,
