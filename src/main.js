@@ -96,47 +96,45 @@ async function searchImages() {
     console.error(error);
   } finally {
         hideLoader();
-        form.reset();
   }
 }
   
 function displayImages(images) {
-    const galleryHtml = images.map(({
-        webformatURL,
-        largeImageURL,
-        tags,
-        likes,
-        views,
-        comments,
-        downloads }) => {
-        return `<li class= "gallery-list">
-                <div class="gallery-div">
-                   <a class= "gallery-link" href="${largeImageURL}">
-                     <img src="${webformatURL}"  alt="${tags}" class="gallery-image"/>
-                   </a>
-                </div>
-                <ul class="card-info">
-                <li class="info-item">
-                   <h3>Likes</h3>
-                   <p>${likes}</p>
-                </li>
-                <li class="info-item">
-                  <h3>Views</h3>
-                  <p>${views}</p>
-                </li>
-                <li class="info-item">
-                  <h3>Comments</h3>
-                  <p>${comments}</p>
-                </li>
-                <li class="info-item">
-                   <h3>Downloads</h3>
-                   <p>${downloads}</p>
-                </li>
-                </ul>
-                </li>`;
-    }).join("");
+    const fragment = document.createDocumentFragment();
+    images.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
+        const listItem = document.createElement('li');
+        listItem.className = "gallery-list";
 
-    gallery.innerHTML += galleryHtml;
+        listItem.innerHTML = `
+            <div class="gallery-div">
+                <a class="gallery-link" href="${largeImageURL}">
+                    <img src="${webformatURL}" alt="${tags}" class="gallery-image"/>
+                </a>
+            </div>
+            <ul class="card-info">
+                <li class="info-item">
+                    <h3>Likes</h3>
+                    <p>${likes}</p>
+                </li>
+                <li class="info-item">
+                    <h3>Views</h3>
+                    <p>${views}</p>
+                </li>
+                <li class="info-item">
+                    <h3>Comments</h3>
+                    <p>${comments}</p>
+                </li>
+                <li class="info-item">
+                    <h3>Downloads</h3>
+                    <p>${downloads}</p>
+                </li>
+            </ul>
+        `;
+
+        fragment.appendChild(listItem);
+    });
+
+    gallery.appendChild(fragment);
             
     const lightbox = new SimpleLightbox(".gallery a", {
         captionsData: "alt",
